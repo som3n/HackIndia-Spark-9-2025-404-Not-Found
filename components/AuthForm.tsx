@@ -8,6 +8,7 @@ import { auth } from "@/firebase/client";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useEffect } from "react";
 
 import {
   createUserWithEmailAndPassword,
@@ -19,6 +20,8 @@ import { Button } from "@/components/ui/button";
 
 import { signIn, signUp } from "@/lib/actions/auth.action";
 import FormField from "./FormField";
+
+const motivationalQuote = "Empower your future with every login!";
 
 const authFormSchema = (type: FormType) => {
   return z.object({
@@ -99,13 +102,17 @@ const AuthForm = ({ type }: { type: FormType }) => {
 
   return (
     <div className="card-border lg:min-w-[566px]">
-      <div className="flex flex-col gap-6 card py-14 px-10">
+      <div className="flex flex-col items-center justify-between gap-6 card py-14 px-10 bg-white bg-opacity-90 rounded-lg shadow-lg">
         <div className="flex flex-row gap-2 justify-center">
           <Image src="/logo.svg" alt="logo" height={32} width={38} />
-          <h2 className="text-primary-100">PrepWise</h2>
+          <h2 className="text-primary-100 w-full">PrepView <span className="text-sm italic font-serif">by ConnectI</span></h2>
         </div>
 
         <h3>Practice job interviews with AI</h3>
+        
+        <blockquote className="text-center italic text-gray-600 mb-4">
+          {motivationalQuote}
+        </blockquote>
 
         <Form {...form}>
           <form

@@ -1,51 +1,113 @@
-import React from 'react'
-import dayjs from 'dayjs';
-import Image from 'next/image';
-import { getRandomInterviewCover } from '@/lib/utils';
-import { Button } from './ui/button';
-import Link from 'next/link';
-import DisplayTechIcons from './DisplayTechIcons';
+import dayjs from "dayjs";
+import Link from "next/link";
+import Image from "next/image";
 
-const InterviewCard = ({interviewId, userId, role, type, techstack, createdAt}:InterviewCardProps) => {
-  const feedback = null as Feedback | null;
-  const normalizedType = /mix/gi.test(type) ? 'Mixed' : type; 
-  const formattedDate= dayjs(feedback?.createdAt ||createdAt ||Date.now()).format('MMM D, YYYY');
+import { Button } from "./ui/button";
+import DisplayTechIcons from "./DisplayTechIcons";
+
+import { cn, getRandomInterviewCover } from "@/lib/utils";
+import { getFeedbackByInterviewId } from "@/lib/actions/general.action";
+
+const InterviewCard = async ({
+  interviewId,
+  userId,
+  role,
+  type,
+  techstack,
+  createdAt,
+}: InterviewCardProps) => {
+  const feedback =
+    userId && interviewId
+      ? await getFeedbackByInterviewId({
+        interviewId,
+        userId,
+      })
+      : null;
+
+  const normalizedType = /mix/gi.test(type) ? "Mixed" : type;
+
+  const badgeColor =
+    {
+      Behavioral: "bg-light-400",
+      Mixed: "bg-light-600",
+      Technical: "bg-light-800",
+    }[normalizedType] || "bg-light-600";
+
+  const formattedDate = dayjs(
+    feedback?.createdAt || createdAt || Date.now()
+  ).format("MMM D, YYYY");
+
   return (
-    <div className='card-border w-[360px] max-sm:w-full min-h-90' >
-      <div className='card-interview'>
-        <div>
-          <div className='absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg bg-light-600'>
-            <p className='badge-text'>{normalizedType}</p>
+    <div className="card-border w-[360px] max-sm:w-full min-h-90 transition-transform transform hover:shadow-lg pb-1">
+      <div className="bg-gradient-to-b from-[#1E201E] to-[#181C14] p-5 bg-white rounded-xl shadow-md flex flex-col items-start justify-between h-full">
+        <div className="space-y-5">
+          {/* Type Badge */}
+          <div
+            className={cn(
+              "absolute top-0 right-0 w-fit px-4 py-2 rounded-bl-lg rounded-tr-xl",
+              badgeColor
+            )}
+          >
+            <p className="badge-text font-semibold text-white">{normalizedType}</p>
           </div>
-          <Image src={getRandomInterviewCover()} alt='Cover Image' width={90} height={90} className='rounded-full object-fit size-[90px]'/>
-          <h4 className='mt-5 capitalize text-xl font-semibold'>
-            {role} interview
-          </h4>
-          <div className='flex flex-row gap-5 mt-3'>
-            <div className='flex flex-row gap-2'>
-              <Image src='/calendar.svg' alt='calendar' width={15} height={15} />
-              <p>{formattedDate}</p>
-            </div>
-            <div className='flex flex-row gap-2 items-center'>
-              <Image src='/star.svg' alt='star' width={15} height={15} />
-              <p>{feedback?.totalScore || '---'}/100</p>
+
+          {/* Cover Image and Interview Role */}
+          <div className="flex flex-col items-center mt-5">
+            <Image
+              src={getRandomInterviewCover()}
+              alt="cover-image"
+              width={90}
+              height={90}
+              className="rounded-full object-fit size-[60px] border-2 border-gray-300 shadow-sm"
+            />
+            <h3 className="ml-4 capitalize text-xl font-bold">{role} Interview</h3>
+          </div>
+
+          {/* Date & Score */}
+          <div className="flex flex-col items-center">
+            <div className="flex flex-row gap-5 mt-3">
+              <div className="flex flex-row gap-2 items-center">
+                <Image
+                  src="/calendar.svg"
+                  width={22}
+                  height={22}
+                  alt="calendar"
+                />
+                <p className="text-gray-600">{formattedDate}</p>
+              </div>
+
+              <div className="flex flex-row gap-2 items-center">
+                <Image src="/star.svg" width={22} height={22} alt="star" />
+                <p className="text-gray-600">{feedback?.totalScore || "---"}/100</p>
+              </div>
             </div>
           </div>
-          <p className='line-clamp-2 mt-5'>
-            {feedback?.finalAssessment || "You haven't taken the interview yet. Take it now to inprove your skills. "}
+
+          {/* Feedback or Placeholder Text */}
+          <p className="line-clamp-2 mt-5 text-white text-center">
+            {feedback?.finalAssessment ||
+              "You haven't taken this interview yet. Take it now to improve your skills."}
           </p>
         </div>
-        <div className='flex flex-row justify-between'>
+
+        <div className="flex flex-col space-y-2 items-center justify-between mt-4 w-full">
           <DisplayTechIcons techStack={techstack} />
-          <Button className='btn-primary'>
-            <Link href={feedback?`/interview/{interviewId}/feedback`:'/interview/interviewId'}>
-              {feedback? 'Check Feedback': 'Take Interview'}
+
+          <Button className="btn-primary bg-blue-600 hover:bg-blue-700 text-white font-semibold transition duration-200">
+            <Link
+              href={
+                feedback
+                  ? `/interview/${interviewId}/feedback`
+                  : `/interview/${interviewId}`
+              }
+            >
+              {feedback ? "Check Feedback" : "View Interview"}
             </Link>
           </Button>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default InterviewCard
+export default InterviewCard;
