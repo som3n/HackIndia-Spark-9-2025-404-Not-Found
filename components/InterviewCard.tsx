@@ -60,7 +60,7 @@ const InterviewCard = async ({
               height={90}
               className="rounded-full object-fit size-[60px] border-2 border-gray-300 shadow-sm"
             />
-            <h3 className="ml-4 capitalize text-xl font-bold">{role} Interview</h3>
+            <h3 className="ml-4 capitalize text-xl font-bold text-center mt-4">{role} Interview</h3>
           </div>
 
           {/* Date & Score */}
@@ -97,8 +97,8 @@ const InterviewCard = async ({
             <Link
               href={
                 feedback
-                  ? `/interview/${interviewId}/feedback`
-                  : `/interview/${interviewId}`
+                  ? `/take-interview/${interviewId}/feedback`
+                  : `/take-interview/${interviewId}`
               }
             >
               {feedback ? "Check Feedback" : "View Interview"}

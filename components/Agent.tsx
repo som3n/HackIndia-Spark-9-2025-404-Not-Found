@@ -98,7 +98,7 @@ const Agent = ({
       });
 
       if (success && id) {
-        router.push(`/interview/${interviewId}/feedback`);
+        router.push(`/take-interview/${interviewId}/feedback`);
       } else {
         console.log("Error saving feedback");
         router.push("/");
@@ -147,7 +147,7 @@ const Agent = ({
 
   return (
     <>
-      <div className="call-view">
+      <div className="call-view pt-4">
         {/* AI Interviewer Card */}
         <div className="card-interviewer">
           <div className="avatar">
@@ -194,7 +194,7 @@ const Agent = ({
         </div>
       )}
 
-      <div className="w-full flex justify-center">
+      <div className="w-full flex justify-center pt-4">
         {callStatus !== "ACTIVE" ? (
           <button className="relative btn-call" onClick={() => handleCall()}>
             <span

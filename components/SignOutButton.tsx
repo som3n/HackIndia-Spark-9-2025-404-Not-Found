@@ -9,7 +9,7 @@ const SignOutButton = () => {
 
   const handleSignOut = async () => {
     await signOut();
-    router.push("/sign-in");
+    router.push("/landing");
   };
 
   return (

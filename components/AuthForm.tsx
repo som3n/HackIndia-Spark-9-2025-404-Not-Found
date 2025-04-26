@@ -105,10 +105,10 @@ const AuthForm = ({ type }: { type: FormType }) => {
       <div className="flex flex-col items-center justify-between gap-6 card py-14 px-10 bg-white bg-opacity-90 rounded-lg shadow-lg">
         <div className="flex flex-row gap-2 justify-center">
           <Image src="/logo.svg" alt="logo" height={32} width={38} />
-          <h2 className="text-primary-100 w-full">PrepView <span className="text-sm italic font-serif">by ConnectI</span></h2>
+          <h2 className="text-primary-100 w-full">PrepView</h2>
         </div>
 
-        <h3>Practice job interviews with AI</h3>
+        <h3>Prepare to grab your next big opportunity.</h3>
         
         <blockquote className="text-center italic text-gray-600 mb-4">
           {motivationalQuote}
