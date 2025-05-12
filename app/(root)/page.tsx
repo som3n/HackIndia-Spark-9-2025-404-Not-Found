@@ -61,7 +61,7 @@ async function page() {
             <div className="flex flex-col space-y-2 interview-card w-2/5 bg-stone-800 p-4 rounded shadow">
               <h3 className="text-lg font-semibold">Want prepare for next big opportunity?</h3>
               {totalInterviewsTaken ? <p className="text-sm">Just give answer to few questions and create you own personalized interview</p> : <p> No Interview Taken yet!</p>}
-              <Link className="bg-blue-700 hover:bg-blue-500 transition-all ease-in-out text-sm duration-500 px-4 py-2 rounded-lg w-2/3" href="/take-interview">Create an Interview</Link>
+              <Link className="bg-green-700 hover:bg-green-500 transition-all ease-in-out text-sm duration-500 px-4 py-2 rounded-lg w-2/3" href="/take-interview">Create an Interview</Link>
             </div>
             <div className="flex flex-col justify-between interview-card bg-stone-800 p-4 rounded shadow">
               <h3 className="text-lg font-semibold">Total Number Interviews</h3>
